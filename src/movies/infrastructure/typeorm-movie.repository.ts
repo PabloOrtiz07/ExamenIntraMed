@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Movie } from '../domain/movie.entity';
+import { In, Repository } from 'typeorm';import { Movie } from '../domain/movie.entity';
 import { MovieRepository } from '../domain/movie.repository';
 import { MovieMapper } from './movie.mapper';
 import { MovieOrmEntity } from './movie.orm-entity';
+
 
 @Injectable()
 export class TypeOrmMovieRepository implements MovieRepository {
@@ -30,5 +30,20 @@ export class TypeOrmMovieRepository implements MovieRepository {
 
   async delete(id: string): Promise<void> {
     await this.repo.delete(id);
+  }
+    async findExistingExternalUrls(urls: string[]): Promise<string[]> {
+    if (urls.length === 0) return [];
+    const rows = await this.repo.find({
+      select: { externalUrl: true },
+      where: { externalUrl: In(urls) },
+    });
+    return rows
+      .map((row) => row.externalUrl)
+      .filter((url): url is string => url !== null);
+  }
+
+  async saveMany(movies: Movie[]): Promise<void> {
+    if (movies.length === 0) return;
+    await this.repo.save(movies.map((movie) => MovieMapper.toOrm(movie)));
   }
 }
