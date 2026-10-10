@@ -5,6 +5,7 @@ import { UsersModule } from '../users/users.module';
 import { LoginUseCase } from './application/login.use-case';
 import { PasswordHasher } from './application/password-hasher';
 import { SignUpUseCase } from './application/sign-up.use-case';
+import { AdminSeeder } from './infrastructure/admin-seeder';
 import { BcryptPasswordHasher } from './infrastructure/bcrypt-password-hasher';
 import { AuthController } from './presentation/auth.controller';
 
@@ -24,6 +25,8 @@ import { AuthController } from './presentation/auth.controller';
     SignUpUseCase,
     LoginUseCase,
     { provide: PasswordHasher, useClass: BcryptPasswordHasher },
+    AdminSeeder,
   ],
+  exports: [JwtModule],
 })
 export class AuthModule {}
