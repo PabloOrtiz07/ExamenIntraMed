@@ -31,7 +31,8 @@ export class TypeOrmMovieRepository implements MovieRepository {
   async delete(id: string): Promise<void> {
     await this.repo.delete(id);
   }
-    async findExistingExternalUrls(urls: string[]): Promise<string[]> {
+
+  async findExistingExternalUrls(urls: string[]): Promise<string[]> {
     if (urls.length === 0) return [];
     const rows = await this.repo.find({
       select: { externalUrl: true },
