@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { MoviesModule } from './movies/movies.module';
 import { SyncModule } from './sync/sync.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
