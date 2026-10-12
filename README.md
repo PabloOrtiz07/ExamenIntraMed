@@ -3,8 +3,9 @@
 Backend built with **NestJS** to manage movies. It imports films from the public
 Star Wars API and exposes a role-protected REST API (JWT, `admin` / `regular`).
 
-- Swagger docs: `http://localhost:3000/docs` (local)
+- Swagger docs: `http://localhost:3000/docs` (local, needs the API running)
 - Raw OpenAPI JSON: `http://localhost:3000/docs-json`
+- API contract: [`docs/openapi.json`](docs/openapi.json) (import it in https://editor.swagger.io or Postman)
 
 ## Stack
 
@@ -57,7 +58,12 @@ docker compose up --build
 ```
 
 API on `http://localhost:3000`, PostgreSQL on `localhost:5433`.
+Compose runs with `NODE_ENV=development` so TypeORM creates the tables automatically.
 Stop and remove data with `docker compose down -v`.
+
+## Deployment
+
+Not deployed. Run it with Docker Compose (see above).
 
 ## Environment variables
 
@@ -106,6 +112,7 @@ Unit tests cover the use cases, the JWT and roles guards, the movies controller
 (including the role metadata of each route), the sync and the movie mapper.
 Repositories use abstract ports, so tests run with fakes: no database and no network.
 
+<<<<<<< HEAD
 ## Decisions and assumptions
 
 - **Movie details are visible to `regular` users and also to `admin`.** The brief
@@ -131,3 +138,6 @@ Repositories use abstract ports, so tests run with fakes: no database and no net
 - No pagination on `GET /movies`, no rate limiting on login, no refresh tokens.
 - No integration or e2e tests against a real database yet.
 - Domain errors mapped through an exception filter instead of Nest exceptions in use cases.
+=======
+Smoke test (needs the API running): `.\scripts\smoke-test.ps1` (PowerShell).
+>>>>>>> 436c1fc493212f6477c47e0ab55974c83a8ca6a4
