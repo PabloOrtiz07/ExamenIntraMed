@@ -112,4 +112,4 @@ Unit tests cover the use cases, the JWT and roles guards, the movies controller
 (including the role metadata of each route), the sync and the movie mapper.
 Repositories use abstract ports, so tests run with fakes: no database and no network.
 
-Smoke test (needs the API running): `.\scripts\smoke-test.ps1` (PowerShell).
+Smoke test (needs the API running): `.\scripts\smoke-test.ps1`.
