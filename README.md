@@ -112,32 +112,4 @@ Unit tests cover the use cases, the JWT and roles guards, the movies controller
 (including the role metadata of each route), the sync and the movie mapper.
 Repositories use abstract ports, so tests run with fakes: no database and no network.
 
-<<<<<<< HEAD
-## Decisions and assumptions
-
-- **Movie details are visible to `regular` users and also to `admin`.** The brief
-  says only regular users; I allowed admins too because an admin who manages
-  movies must be able to read them. It is a one-line change in the `@Roles()`
-  decorator of `GET /movies/:id`.
-- **The movie list is public**, because the brief only restricts details,
-  create, update and delete.
-- **Sign-up can never create an admin.** The role is forced to `regular`, and the
-  DTO rejects unknown fields. The first admin comes from environment variables
-  (seed at startup, idempotent).
-- **Sync only inserts missing movies** (matched by the Star Wars API URL). It never
-  overwrites edits made by an admin, and running it twice creates no duplicates.
-- **Deleting a movie is a soft delete.** The row stays in the database with a
-  `deleted_at` date and is hidden from the API. Sync still sees deleted movies,
-  so it never brings back a movie that an admin deleted.
-- **Login returns the same error** for an unknown email and a wrong password.
-
-## Known limitations and next steps
-
-- Use migrations instead of `synchronize` (Docker Compose runs with
-  `NODE_ENV=development` for that reason).
-- No pagination on `GET /movies`, no rate limiting on login, no refresh tokens.
-- No integration or e2e tests against a real database yet.
-- Domain errors mapped through an exception filter instead of Nest exceptions in use cases.
-=======
 Smoke test (needs the API running): `.\scripts\smoke-test.ps1` (PowerShell).
->>>>>>> 436c1fc493212f6477c47e0ab55974c83a8ca6a4
