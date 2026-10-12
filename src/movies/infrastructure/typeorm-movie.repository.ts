@@ -29,7 +29,7 @@ export class TypeOrmMovieRepository implements MovieRepository {
   }
 
   async delete(id: string): Promise<void> {
-    await this.repo.delete(id);
+    await this.repo.softDelete(id);
   }
 
   async findExistingExternalUrls(urls: string[]): Promise<string[]> {
@@ -37,6 +37,8 @@ export class TypeOrmMovieRepository implements MovieRepository {
     const rows = await this.repo.find({
       select: { externalUrl: true },
       where: { externalUrl: In(urls) },
+      // Soft-deleted movies count as existing, so sync does not bring them back
+      withDeleted: true,
     });
     return rows
       .map((row) => row.externalUrl)

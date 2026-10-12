@@ -119,13 +119,15 @@ Repositories use abstract ports, so tests run with fakes: no database and no net
   (seed at startup, idempotent).
 - **Sync only inserts missing movies** (matched by the Star Wars API URL). It never
   overwrites edits made by an admin, and running it twice creates no duplicates.
+- **Deleting a movie is a soft delete.** The row stays in the database with a
+  `deleted_at` date and is hidden from the API. Sync still sees deleted movies,
+  so it never brings back a movie that an admin deleted.
 - **Login returns the same error** for an unknown email and a wrong password.
 
 ## Known limitations and next steps
 
 - Use migrations instead of `synchronize` (Docker Compose runs with
   `NODE_ENV=development` for that reason).
-- Deleting a synced movie makes the next sync bring it back (soft delete would fix it).
 - No pagination on `GET /movies`, no rate limiting on login, no refresh tokens.
 - No integration or e2e tests against a real database yet.
 - Domain errors mapped through an exception filter instead of Nest exceptions in use cases.
