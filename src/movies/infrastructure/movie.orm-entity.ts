@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('movies')
 export class MovieOrmEntity {
@@ -26,4 +31,7 @@ export class MovieOrmEntity {
 
   @Column({ name: 'external_url', type: 'varchar', nullable: true, unique: true })
   externalUrl!: string | null;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt?: Date | null;
 }
