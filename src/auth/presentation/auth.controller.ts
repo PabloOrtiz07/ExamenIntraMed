@@ -1,6 +1,5 @@
-import { Body, Controller, Get, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import {
-  ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiOkResponse,
@@ -13,8 +12,6 @@ import { SignUpUseCase } from '../application/sign-up.use-case';
 import { LoginResponseDto, SignUpResponseDto } from './dto/auth-response.dto';
 import { LoginDto } from './dto/login.dto';
 import { SignUpDto } from './dto/sign-up.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import type { AuthenticatedRequest } from './guards/jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -40,15 +37,5 @@ export class AuthController {
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   authenticate(@Body() dto: LoginDto): Promise<LoginResponseDto> {
     return this.login.execute(dto);
-  }
-
-  @Get('me')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Show the identity stored in the current token' })
-  @ApiOkResponse({ description: 'Token payload: sub, email, role, iat, exp' })
-  @ApiUnauthorizedResponse({ description: 'Missing, invalid or expired token' })
-  me(@Req() req: AuthenticatedRequest) {
-    return req.user;
   }
 }
