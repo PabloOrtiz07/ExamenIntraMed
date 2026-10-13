@@ -99,7 +99,7 @@ Change `JWT_SECRET` and `ADMIN_PASSWORD` outside of local testing.
 | DELETE | `/movies/:id` | `admin` |
 | POST | `/sync/movies` | `admin` |
 
-A cron job also runs the sync every day at 3 AM (server time).
+A cron job also runs the sync every day at 3 AM.
 
 ## Tests
 
