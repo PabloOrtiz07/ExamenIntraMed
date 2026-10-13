@@ -91,7 +91,6 @@ Change `JWT_SECRET` and `ADMIN_PASSWORD` outside of local testing.
 | --- | --- | --- |
 | POST | `/auth/sign-up` | Public. Always creates a `regular` user |
 | POST | `/auth/login` | Public. Returns a JWT |
-| GET | `/auth/me` | Any authenticated user |
 | GET | `/movies` | Public |
 | GET | `/movies/:id` | `regular` and `admin` |
 | POST | `/movies` | `admin` |
