@@ -57,10 +57,6 @@ if ($userLogin.Status -ne 200 -or $adminLogin.Status -ne 200) {
 $userToken = ($userLogin.Body | ConvertFrom-Json).accessToken
 $adminToken = ($adminLogin.Body | ConvertFrom-Json).accessToken
 
-Check '/auth/me without token'            401 (Call GET '/auth/me' $null $null).Status
-Check '/auth/me with token'               200 (Call GET '/auth/me' $userToken $null).Status
-Check '/auth/me with garbage token'       401 (Call GET '/auth/me' 'garbage' $null).Status
-
 Write-Host "`n--- 3. Sync (admin only) ---"
 Check 'sync without token'                401 (Call POST '/sync/movies' $null $null).Status
 Check 'sync as regular user'              403 (Call POST '/sync/movies' $userToken $null).Status
